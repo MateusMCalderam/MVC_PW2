@@ -7,8 +7,8 @@
 </head>
 <body>
     <h1>Cadastro de Alunos</h1>
-    <a href="alunos.php?destino=list">Voltar para a listagem</a>
-    <form action="alunos.php?destino=save" method="POST">
+    <a href="mostraAlunos.php">Voltar para a listagem</a>
+    <form action="salvaAluno.php" method="POST">
         <input type="hidden" name="id" value="<?php echo isset($aluno) ? $aluno->getId() : ''; ?>">
         
         <label for="nome">Nome:</label>

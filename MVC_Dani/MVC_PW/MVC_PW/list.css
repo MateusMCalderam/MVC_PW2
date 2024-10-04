@@ -1,0 +1,99 @@
+/* Estilos Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: #333;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.navbar a:hover {
+    background-color: #575757;
+    color: white;
+}
+
+/* Estilo para Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Tornando a tabela responsiva */
+table tbody td {
+    display: block;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+}
+
+table tbody td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 10px;
+    text-align: left;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+@media (min-width: 600px) {
+    table tbody td {
+        display: table-cell;
+        text-align: left;
+        padding-left: 12px;
+    }
+
+    table tbody td::before {
+        display: none;
+    }
+}

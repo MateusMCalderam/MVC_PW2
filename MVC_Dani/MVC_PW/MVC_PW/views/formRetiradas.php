@@ -7,15 +7,9 @@
 </head>
 <body>
     <h1>Cadastro de Retiradas de Livros</h1>
-    <?php
-        if (isset($_GET['erro'])) {
-            echo "<p>".$_GET['erro']."</p>";
-        }
-    ?>
-    <a href="retiradas.php?destino=list">Voltar para a listagem</a>
-    <form action="retiradas.php?destino=save" method="POST">
+    <a href="mostraRetiradas.php">Voltar para a listagem</a>
+    <form action="salvaRetirada.php" method="POST">
         <input type="hidden" name="id" value="<?php echo $retirada->getId() !== null ? $retirada->getId() : ''; ?>">
-
         <label for="nome_aluno">Nome do Aluno:</label>
         <select name="id_aluno" id="nome_aluno" required>
             <option value="">Selecione um aluno</option>

@@ -64,8 +64,6 @@ final class RetiradasModel extends Model {
             ":data_retirada" => $vo->getDataRetirada(),
             ":data_devolucao" => $vo->getDataDevolucao()
         ];
-
-        print_r($binds);
         
         return $db->execute($query, $binds);
     }
@@ -94,5 +92,34 @@ final class RetiradasModel extends Model {
         
         return $db->execute($query, $binds);
     }
+
+    public function countRetiradasAtivasPorLivro($idLivro) {
+        $db = new Database();
+
+        $query = "SELECT COUNT(*) as total FROM retiradas WHERE id_livro = :idLivro"; 
+        $binds = [":idLivro" => $idLivro];
+
+    
+        $data = $db->select($query, $binds);
+        return $data[0]['total'];
+    }
+
+    public function findById($id) {
+        $db = new Database();
+        $query = "SELECT * FROM retiradas WHERE id = :id";
+        $binds = [
+            "id" => $id
+        ];
+        $data = $db->select($query, $binds);
+
+        return new RetiradasVO(
+            $data[0]["id"], 
+            $data[0]["id_aluno"], 
+            $data[0]["id_livro"], 
+            $data[0]["data_retirada"], 
+            $data[0]["data_devolucao"]
+        );
+    }
+
     
 }

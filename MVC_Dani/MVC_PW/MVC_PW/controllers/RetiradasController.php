@@ -49,41 +49,57 @@ final class RetiradasController extends Controller {
 
     public function save() {
         $id = $_POST["id"];
-
-
-        date_default_timezone_set('America/Sao_Paulo');
+        $idLivro = $_POST["id_livro"];
     
+        date_default_timezone_set('America/Sao_Paulo');
+        
         $data_retirada = date($_POST["data_retirada"]);  
         $qtdDias = 7;
         $data_devolucao = date('Y-m-d', strtotime("+{$qtdDias} days", strtotime($data_retirada)));
-        
+    
         $vo = new RetiradasVO(
             $_POST["id"],
             $_POST["id_aluno"],
-            $_POST["id_livro"],
+            $idLivro,
             $data_retirada,
             $data_devolucao
         );
-        
-        print_r($vo);
         $model = new RetiradasModel();
-        
-        if(empty($id)) {
+    
+        $livrosModel = new LivrosModel();
+        $livro = $livrosModel->findById($idLivro);
+    
+        if ($livro->getExemplaresDisponiveis() <= 0) {
+            echo '<a href="mostraRetiradas.php">Voltar para Retiradas</a>';
+            echo "Não existem mais exemplares disponíveis para este livro.";
+            return;
+        }
+
+        if (empty($id)) {
             $result = $model->insert($vo);
-        }else{
+            $livrosModel->decrementExemplares($idLivro);
+        } else {
             $result = $model->update($vo);
         }
-        var_dump($result)   ;
-        $this->redirect("retiradas.php?destino=list");
+
+        $this->redirect("mostraRetiradas.php");
     }
     
 
     public function remove() {
         $vo = new RetiradasVO($_GET["id"]);
         $model = new RetiradasModel();
+        
+        $retirada = $model->findById($_GET["id"]);
+        $idLivro = $retirada->getIdLivro();
+        
+        echo $idLivro;
+        
+        $livrosModel = new LivrosModel();
+        $livrosModel->incrementExemplares($idLivro);
+
         $result = $model->delete($vo);
-
-        $this->redirect("retiradas.php?destino=list");
+        $this->redirect("mostraRetiradas.php");
     }
-
+    
 }

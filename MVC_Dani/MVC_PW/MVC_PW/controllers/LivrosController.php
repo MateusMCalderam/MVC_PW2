@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Model\LivrosModel;
+use Model\RetiradasModel;
 use Model\VO\LivrosVO;
 
 final class LivrosController extends Controller {
@@ -33,66 +34,60 @@ final class LivrosController extends Controller {
     }
 
     public function save() {
-
-        $id = $_GET["id"] ?? 0;
-        $erro = "";
-        if (
-            empty($_POST["titulo"]) ||
-            empty($_POST["autores"]) ||
-            empty($_POST["editora"]) ||
-            empty($_POST["ano_publicacao"]) ||
-            empty($_POST["quantidade_exemplares"]) ||
-            empty($_POST["isbn"])
-        ) {
-            $erro = "Erro: Todos os campos são obrigatórios!";
-        }
-        $isbnLength = strlen($_POST["isbn"]);
-        if ($isbnLength !== 10 && $isbnLength !== 13) {
-            $erro = "Erro: O ISBN deve ter 10 ou 13 caracteres!";
-        }
-        if (!is_numeric($_POST["quantidade_exemplares"]) || $_POST["quantidade_exemplares"] < 0) {
-            $erro = "Erro: A quantidade de exemplares deve ser um número válido e maior ou igual a 0!";
-        }
-        if (strlen($_POST["ano_publicacao"]) !== 4 || !is_numeric($_POST["ano_publicacao"])) {
-            $erro = "Erro: O ano de publicação deve ter exatamente 4 dígitos!";
-        }
-        echo "aaaaaaaaaaaaaaaaa";
-        if (empty($erro)) {
-            $this->loadView("formLivros", [
-                "erro" => $erro
-            ]);
-            return;
-        }
-
-        print_r($_POST);
         $id = $_POST["id"];
+        $quantidade_exemplares = $_POST["quantidade_exemplares"];
+        
+        $model = new LivrosModel();
+
         $vo = new LivrosVO(
             $_POST["id"],
             $_POST["titulo"],
             $_POST["autores"],
             $_POST["editora"],
             $_POST["ano_publicacao"],
-            $_POST["quantidade_exemplares"],
-            $_POST["isbn"]
+            $quantidade_exemplares,
+            $_POST["isbn"],
+            $quantidade_exemplares
         );
         
-        $model = new LivrosModel();
-        
-        if(empty($id)) {
+        if (!empty($id)) {
+            $retiradasModel = new RetiradasModel();
+            $retiradasAtivas = $retiradasModel->countRetiradasAtivasPorLivro($id);
+            
+            if ($quantidade_exemplares < $retiradasAtivas) {
+                $erro = "Erro: Existem mais retiradas ativas do que exemplares disponíveis. Atualize a quantidade para ser maior ou igual a $retiradasAtivas.";
+                $this->loadView("formLivros", [
+                    "livro" => $vo,
+                    "erro" => $erro
+                ]);
+                return;
+            } else {
+                $vo = new LivrosVO(
+                    $_POST["id"],
+                    $_POST["titulo"],
+                    $_POST["autores"],
+                    $_POST["editora"],
+                    $_POST["ano_publicacao"],
+                    $quantidade_exemplares,
+                    $_POST["isbn"],
+                    $quantidade_exemplares - $retiradasAtivas
+                );
+            }
+        } 
+    
+        if (empty($id)) {
             $result = $model->insert($vo);
-        }else{
+        } else {
             $result = $model->update($vo);
         }
-        var_dump($result)   ;
+    
         $this->redirect("index.php");
-
     }
 
     public function remove() {
         $vo = new LivrosVO($_GET["id"]);
         $model = new LivrosModel();
         $result = $model->delete($vo);
-
         $this->redirect("index.php");
     }
 

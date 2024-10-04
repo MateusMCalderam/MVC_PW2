@@ -4,15 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema Biblioteca</title>
+    <link rel="stylesheet" href="list.css">
 </head>
 <body>
-    <h1>Retirada de Livros</h1>
-    <a href="retiradas.php?destino=form">Incluir Nova</a>
-    <a href="alunos.php?destino=list">Ver Alunos</a>
-    <a href="livro.php?destino=list">Ver Livros</a>
-    
+    <nav class="navbar">
+        <a href="mostraLivros.php">Ver Livros</a>
+        <a href="mostraAlunos.php">Ver Alunos</a>
+        <a href="mostraRetiradas.php">Ver Retiradas</a>
+        <a href="formLivro.php">Adicionar Livro</a>
+    </nav>
+
+    <h1>Cadastro de Retiradas</h1>
+    <a href="formRetirada.php">Incluir Nova</a>
+
     <?php if (empty($retiradas)): ?>
-        <p>Nenhum retirada realizada!</p>
+        <p>Nenhuma retirada realizada!</p>
     <?php else: ?>
         <table>
             <thead>
@@ -21,20 +27,19 @@
                     <th>Nome Livro</th>
                     <th>Data Retirada</th>
                     <th>Data Devolução</th>
-                    <th></th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($retiradas as $retirada): ?>
                     <tr>
-                        <td><?php echo $retirada->getNomeAluno(); ?></td>
-                        <td><?php echo $retirada->getNomeLivro(); ?></td>
-                        <td><?php echo $retirada->getDataRetirada(); ?></td>
-                        <td><?php echo $retirada->getDataDevolucao(); ?></td>
+                        <td data-label="Nome Aluno"><?php echo $retirada->getNomeAluno(); ?></td>
+                        <td data-label="Nome Livro"><?php echo $retirada->getNomeLivro(); ?></td>
+                        <td data-label="Data Retirada"><?php echo $retirada->getDataRetirada(); ?></td>
+                        <td data-label="Data Devolução"><?php echo $retirada->getDataDevolucao(); ?></td>
                         <td>
-                            <a href="retiradas.php?destino=form&id=<?php echo $retirada->getId(); ?>">Editar</a>
-                            <br>
-                            <a href="retiradas.php?destino=remove&id=<?php echo $retirada->getId(); ?>">Excluir</a>
+                            <a href="formRetirada.php?id=<?php echo $retirada->getId(); ?>">Editar</a>
+                            <a href="excluirRetirada.php?id=<?php echo $retirada->getId(); ?>">Excluir</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

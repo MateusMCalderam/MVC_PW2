@@ -8,8 +8,14 @@
 <body>
     <h1>Cadastro de Livros</h1>
     <a href="index.php">Voltar para a listagem</a>
-    <form action="livro.php?destino=save" method="POST">
-        <input type="hidden" name="id" value="<?php echo isset($livro) ? $livro->getId() : ''; ?>">
+
+    <?php
+        if (isset($erro)) {
+            echo "<p>".$erro."</p>";
+        }
+    ?>
+    <form action="salvaLivro.php" method="POST">
+        <input type="hidden" name="id" value="<?php  echo isset($livro) ?  $livro->getId() : ''; ?>">
         
         <label for="titulo">Título:</label>
         <input type="text" name="titulo" id="titulo" value="<?php echo isset($livro) ? $livro->getTitulo() : ''; ?>" placeholder="Título do livro" required>

@@ -23,13 +23,12 @@ final class AlunosModel extends Model {
             );
             array_push($arrayDados, $vo);
         }
-        print_r($data);
         return $arrayDados;
     }
 
     public function selectOne($vo) {
         $db = new Database();
-        $query = "SELECT SELECT * FROM alunos WHERE id = :id";
+        $query = "SELECT * FROM alunos WHERE id = :id";
         $binds = [":id" => $vo->getId()];
         $data = $db->select($query, $binds);
 
@@ -61,7 +60,7 @@ final class AlunosModel extends Model {
     public function update($vo) {
         $db = new Database();
         $query = "UPDATE alunos 
-                  SET nome = :nome, data_nasc = :data_nasc, curso = :curso, cpf = :cpf
+                  SET nome = :nome, data_nascimento = :data_nasc, curso = :curso, cpf = :cpf
                   WHERE id = :id";
     
         $binds = [

@@ -10,8 +10,9 @@ final class LivrosVO extends VO {
     private $ano_publicacao;
     private $quantidade_exemplares;
     private $isbn;
+    private $exemplares_disponiveis;
 
-    public function __construct($id = 0, $titulo = "", $autores = "", $editora = "", $ano_publicacao = null, $quantidade_exemplares = 0, $isbn = "") {
+    public function __construct($id = 0, $titulo = "", $autores = "", $editora = "", $ano_publicacao = null, $quantidade_exemplares = 0, $isbn = "", $exemplares_disponiveis = 0) {
         parent::__construct($id);
         $this->titulo = $titulo;
         $this->autores = $autores;
@@ -19,6 +20,7 @@ final class LivrosVO extends VO {
         $this->ano_publicacao = $ano_publicacao;
         $this->quantidade_exemplares = $quantidade_exemplares;
         $this->isbn = $isbn;
+        $this->exemplares_disponiveis = $exemplares_disponiveis;
     }
 
 
@@ -46,6 +48,10 @@ final class LivrosVO extends VO {
         return $this->isbn;
     }
 
+    public function getExemplaresDisponiveis() {
+        return $this->exemplares_disponiveis;
+    }
+
 
     public function setTitulo($titulo) {
         $this->titulo = $titulo;
@@ -69,5 +75,9 @@ final class LivrosVO extends VO {
 
     public function setIsbn($isbn) {
         $this->isbn = $isbn;
+    }
+
+    public function setExemplaresDisponiveis($exemplares_disponiveis) {
+        $this->exemplares_disponiveis = $exemplares_disponiveis;
     }
 }

@@ -37,12 +37,10 @@ final class AlunosController extends Controller {
         $vo = new AlunosVO(
             $_POST["id"],
             $_POST["nome"],
-            $_POST["data_nascimento"],
-            $_POST["id_curso"],
+            $_POST["data_nasc"],
+            $_POST["curso"],
             $_POST["cpf"]
         );
-        
-        print_r($vo);
         $model = new AlunosModel();
         
         if(empty($id)) {
@@ -50,8 +48,7 @@ final class AlunosController extends Controller {
         }else{
             $result = $model->update($vo);
         }
-        var_dump($result)   ;
-        $this->redirect("alunos.php?destino=list");
+        $this->redirect("mostraAlunos.php");
 
     }
 
@@ -60,7 +57,7 @@ final class AlunosController extends Controller {
         $model = new AlunosModel();
         $result = $model->delete($vo);
 
-        $this->redirect("alunos.php?destino=list");
+        $this->redirect("mostraAlunos.php");
     }
 
 }
