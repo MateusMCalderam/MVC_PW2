@@ -16,19 +16,26 @@ h1 {
     margin-bottom: 20px;
 }
 
+.navbar h1 {
+    color: #ddd;
+    margin: 0;
+}
+
+
 a {
     text-decoration: none;
     color: #3498db;
 }
 
-a:hover {
-    text-decoration: underline;
+#activate{
+    background-color: #ddd;
+    color: #333;
 }
-
 /* Navbar */
 .navbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     background-color: #333;
     padding: 10px;
     margin-bottom: 20px;
@@ -46,17 +53,16 @@ a:hover {
     color: white;
 }
 
-/* Estilo para Tabelas */
 table {
     width: 100%;
-    border-collapse: collapse;
     margin-bottom: 20px;
+    border-collapse: collapse;
 }
 
 table th, table td {
     border: 1px solid #ddd;
     padding: 12px;
-    text-align: left;
+    text-align: center;
 }
 
 table th {
@@ -67,33 +73,3 @@ table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* Tornando a tabela responsiva */
-table tbody td {
-    display: block;
-    text-align: right;
-    position: relative;
-    padding-left: 50%;
-}
-
-table tbody td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 0;
-    width: 50%;
-    padding-left: 10px;
-    text-align: left;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-@media (min-width: 600px) {
-    table tbody td {
-        display: table-cell;
-        text-align: left;
-        padding-left: 12px;
-    }
-
-    table tbody td::before {
-        display: none;
-    }
-}

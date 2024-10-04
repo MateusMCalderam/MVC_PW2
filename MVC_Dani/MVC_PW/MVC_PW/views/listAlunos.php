@@ -1,3 +1,25 @@
+<?php
+function getNomeCurso($cursoAbreviado) {
+    $cursos = [
+        'mat' => 'Matemática',
+        'por' => 'Português',
+        'his' => 'História',
+        'geo' => 'Geografia',
+        'cie' => 'Ciências',
+        'art' => 'Artes',
+        'ing' => 'Inglês',
+        'qui' => 'Física'
+    ];
+
+    return isset($cursos[$cursoAbreviado]) ? $cursos[$cursoAbreviado] : 'Curso não encontrado';
+}
+function formatarData($data) {
+    $date = new DateTime($data);
+    return $date->format('d/m/Y');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,14 +30,15 @@
 </head>
 <body>
     <nav class="navbar">
-        <a href="mostraLivros.php">Ver Livros</a>
-        <a href="mostraAlunos.php">Ver Alunos</a>
-        <a href="mostraRetiradas.php">Ver Retiradas</a>
-        <a href="formLivro.php">Adicionar Livro</a>
+        <h1>Sistema Biblioteca</h1>
+        <span>
+            <a href="mostraLivros.php">Livros</a>
+            <a href="mostraAlunos.php" id="activate">Alunos</a>
+            <a href="mostraRetiradas.php">Retiradas</a>
+            <a href="formAluno.php">Adicionar Aluno</a>
+        </span>
     </nav>
     <h1>Listagem de Alunos</h1>
-    <a href="formAluno.php">Incluir Novo Aluno</a>
-    <a href="mostraLivros.php">Ver Livros</a>
     <?php if (empty($alunos)): ?>
         <p>Nenhum aluno adicionado!</p>
     <?php else: ?>
@@ -33,8 +56,8 @@
                 <?php foreach ($alunos as $aluno): ?>
                     <tr>
                         <td><?php echo $aluno->getNome(); ?></td>
-                        <td><?php echo $aluno->getDataNasc(); ?></td>
-                        <td><?php echo $aluno->getCurso(); ?></td>
+                        <td><?php echo formatarData($aluno->getDataNasc()); ?></td>
+                        <td><?php echo getNomeCurso($aluno->getCurso()); ?></td>
                         <td><?php echo $aluno->getCpf(); ?></td>
                         <td>
                             <a href="formAluno.php?id=<?php echo $aluno->getId(); ?>">Editar</a>

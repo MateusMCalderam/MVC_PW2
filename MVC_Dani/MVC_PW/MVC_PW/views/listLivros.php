@@ -11,10 +11,9 @@
 <nav class="navbar">
     <h1>Sistema Biblioteca</h1>
     <span>
-
-        <a href="mostraLivros.php">Ver Livros</a>
-        <a href="mostraAlunos.php">Ver Alunos</a>
-        <a href="mostraRetiradas.php">Ver Retiradas</a>
+        <a href="mostraLivros.php" id="activate">Livros</a>
+        <a href="mostraAlunos.php">Alunos</a>
+        <a href="mostraRetiradas.php">Retiradas</a>
         <a href="formLivro.php">Adicionar Livro</a>
     </span>
     </nav>

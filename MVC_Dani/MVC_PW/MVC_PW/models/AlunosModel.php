@@ -37,8 +37,7 @@ final class AlunosModel extends Model {
             $data[0]["nome"], 
             $data[0]["data_nascimento"], 
             $data[0]["curso"], 
-            $data[0]["cpf"],
-            $data[0]["nome_curso"]
+            $data[0]["cpf"]
         );
     }
 
